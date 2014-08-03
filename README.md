@@ -4,7 +4,7 @@
 
 ## Quickstart
 
-[Install Slush-Studio](https://github.com/djfrsn/slush-studio)
+[Install/Run Slush-Studio](https://github.com/djfrsn/slush-studio)
 
 Install dependencies
 
@@ -72,6 +72,27 @@ to create distributable app
 
 ## Filesystem 
 
+#### SASS
+
+app/lib/styles for all stylesheets
+
+app/lib/styles/critical/_modules/_critical.scss - Any css written here will be inlined in app/index.html after running 'gulp paint' or 'gulp crit'
+
+#### HTML 
+
+Include w/ @@include('included.html')
+
+#### Images
+
+image-min compress files within 'app/lib/img/**/*' on 'gulp build-studio'
+
+#### JS
+
+Automatic minification on build 
+Set files to concat with concat.js paths
+
+#### Creating new task
+
 To create a new gulp task, create a newTask.js file and add this to gulp/task/
 
 Task boilerplate:
@@ -97,7 +118,7 @@ Refer to community docs/write ups for details on how to customize your task furt
 
 ### Task Performance
 
-['gulp-newer'](https://github.com/tschaub/gulp-newer) & ['gulp-cached'](https://github.com/wearefractal/gulp-cached) run for each gulp task. 
+['gulp-newer'](https://github.com/tschaub/gulp-newer) runs for gulp task. 
 
 Gulp task can be 2-3x faster with cache & 'newer' than without after files are cached(second run). 
 
