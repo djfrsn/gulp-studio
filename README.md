@@ -4,12 +4,7 @@
 
 ## Quickstart
 
-[Download](https://github.com/djfrsn/studio/archive/master.zip) or 
-
-```sh
-git clone https://github.com/djfrsn/studio.git 
-```
-then
+[Install Slush-Studio](https://github.com/djfrsn/slush-studio)
 
 Install dependencies
 
@@ -19,11 +14,11 @@ npm install
 Run 
 
 ```sh
-gulp
+gulp paint
 ```
 Vivy!
 
-Head to app/easel.html & start building your creation here 
+Head to app/easel.html or app/lib/styles & start building your creation!  
 
 Use
 
@@ -33,15 +28,53 @@ Use
 
 format to include files. Easel includes will get compiled into index.html.  
 
-## Filesystem 
-When you run 
+## Features
 
-```sh
-gulp
+#### HTML 
++ Minify/Prettify
++ Includes
++ H5BP
+
+#### CSS
++ SASS 
++ Inline Critical CSS w/ dedicated SASS lib
++ Autoprefixer
++ Lint
++ Comb CSS 
+
+
+#### JS 
++ Minify
++ Concat
++ Lint
+
+#### Images
++ Compression with image-min
+
+#### Aux Task
++ Use aux.js/build-aux.js to define misc files to transfer to your build folder 
+
+#### Watch
++ Browser-Sync
++ Live Reload
++ Local Server
+
+
+#### Build
+
+Run 
+
+```sh 
+gulp build-studio
 ```
-our gulpfile.js loads and points to /gulp, an index.js file loads some error handling utilities, then checks /gulp/task/ for any gulp task and loads them. 'default.js' along with any seperate task call 'gulp' recursively, thus looping task together while keeping them in seperate .js files.
 
-To create a new gulp task, create a .js file and add this
+to create distributable app
+
+## Filesystem 
+
+To create a new gulp task, create a newTask.js file and add this to gulp/task/
+
+Task boilerplate:
 
 ```sh
 var gulp = require('gulp');
@@ -59,23 +92,8 @@ Test your task with
 ```sh
 gulp newTask
 ```
-
++ gulp-newer is automatically required on all task
 Refer to community docs/write ups for details on how to customize your task further
-
-Watch is the default task. In watch we split gulp task at high levels such as:
-+ Img - Compress Images
-+ Styles - Run task on stylesheets w/ support for minification, [combing](https://www.npmjs.org/package/gulp-csscomb), autoprefixing & only processing changed files 
-+ Scaffold - Run task on HTML files w/ support for processing changed files only
-+ build-aux - Grab misc files out of your app folder, ie .ico files
-
-
-## Tooling
-
-Aiming for a robust toolbelt.....yet I still want to watch the weight(see: speed), so we will see. 
-
-### Clean Up & Reports
-
-Expect linting, tidying/cleaning, filesize diff checks, & error checking w/ notify to occur during dev/build task for scaffold, sass & js. 
 
 ### Task Performance
 
@@ -83,55 +101,9 @@ Expect linting, tidying/cleaning, filesize diff checks, & error checking w/ noti
 
 Gulp task can be 2-3x faster with cache & 'newer' than without after files are cached(second run). 
 
-### JS
-
-+ Coffescript 
-+ jQuery
-
-### Scaffold w/ Easel
-
-+ Include files in easel.html ... usage: @@('include/thisFile.xtn')
-+ Minification w/ htmlmin
-
-### Style w/ Paint
-
-+ Check for changed files
-+ Compile w/ gulp-ruby-sass & create sass sourcemaps
-+ Autoprefix for last 2 version > 1% + Firefox ESR, Opera 12.1, ie7-9
-+ cssComb w/ 'zen' config
-+ Gulp-Notify if (err) log message
-#### Styles-Build
-+ Run gulp-minify-css
-
-### Img
-
-+ Run imgmin default options
-
-### Aux
-
-+ Bring over preset files from your app folder
-
 ### Gulp Commands
 
 #### Automate w/ Bash
-
-Place this in your bash file....Yeoman replacement coming soon
-
-```sh 
-    alias drop="mkdir newStudio; cd newStudio;"
-    function studio {
-        git clone https://github.com/djfrsn/studio.git .
-        # this runs through pkg.json's listed dependencies & downloads them
-        npm install
-        gulp
-    }
-```
-
-Then run 
-```sh
-drop studio
-```
-to create a new project. 
 
 Quick commands for your bash_profile: 
 
@@ -150,22 +122,24 @@ alias gw="gulp watch"
 #### Watch For Changes & Automatically Refresh Across Devices
 
 ```sh
-$ gulp watch
+$ gulp paint
 ```
 
-This boots a connect server that loads your project in the browser, then watches your files for changes & live updates. 
+This boots a connect server that loads your project in the browser, then watches your html/sass/js for changes & live updates. 
 
 ### Build & Optimize
 
 ```sh
-$ gulp build
+$ gulp build-paint
 ```
 
 Run build versions of default task:
-+ Styles - Compile, prefix, comb('zen'), minify, check for errors & pipe to dest.
++ Styles - Compile SASS, prefix, comb('zen'), minify, check for errors & pipe to dest.
++ Compile-Critical - Inline Critical CSS
++ JS - Minify, Concat & Lint
 + Img - Run imgmin default settings
-+ Scaffold - 
-+ Aux - Grabs misc files parallel to index.html path & provides performance insights w/ pagespeed
++ Scaffold - Compile includes & Minify
++ Aux - Grabs misc files parallel to index.html path & provides performance insights w/ pagespeed(Future ver)
 
 ### Testing
 
@@ -206,25 +180,11 @@ Will create a test-studio task w/ run sequence for self testing
 
 #### Paths
 
-List paths to config here...
+I plan on using a Paths var to organize....paths
 
 ## Vendor CSS 
 
 h5bp
-
-## Web Performance
-
-+ Single css link + critical css served
-+ Single js link....would like to include automatically updating jquery include....
-
-## Browser Support
-
-I have these browsers in mind so far:
-
-* IE10, IE11
-* Evergreen browsers
-
-Will add mobile browsers 
 
 ## Troubleshooting
 
@@ -236,15 +196,18 @@ Remove lib folder & reconfigure source paths in /gulp/task
 
 ## Inspiration
 
-Studio is inspired by a desire to build a platform with modern tooling & best practices baked in, while leaving the door wide open to build anything possible with HTML, CSS, Javascript and other web technologies.
+Studio is inspired by a desire to build a quick web dev platform with modern tooling & best practices baked in, while leaving the door wide open to build anything possible with HTML, CSS, Javascript and other web technologies.
 
 ## Contributing
 
 ## Milestones
 
-#### Paint & Easel v 0.0.1 
+#### Paint & Easel v 0.1.1 
 
 --- Modules tested: 
++ paint
++ brush
++ browser-sync
 + aux 
 + img
 + scaffold
