@@ -74,9 +74,9 @@ to create distributable app
 
 #### SASS
 
-app/lib/styles for all stylesheets
+app/lib/styles for all your styling needs
 
-app/lib/styles/critical/_modules/_critical.scss - Any css written here will be inlined in app/index.html after running 'gulp paint' or 'gulp crit'
+app/lib/styles/critical/_modules/_critical.scss - Any css written here will be inlined in app/index.html after running 'gulp crit' or if _critical changes after running 'gulp paint'
 
 #### HTML 
 
@@ -253,4 +253,4 @@ Contributions, questions and comments are all welcome and encouraged.
 
 ## License
 
-hmmm? Supposedly BSD-2
+MIT
