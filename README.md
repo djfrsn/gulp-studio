@@ -11,14 +11,23 @@ Install dependencies
 ```sh
 npm install
 ```
-Run 
+
+First 
 
 ```sh
-gulp paint
+gulp setup
+```
+
+to download the latest version of [gulp-studio](https://github.com/djfrsn/gulp-studio).
+
+Now run
+
+```sh
+gulp
 ```
 Vivy!
 
-Head to app/easel.html or app/lib/styles & start building your creation!  
+Head to app/easel.html || app/lib/ & start building your creation!  
 
 Use
 
@@ -28,11 +37,18 @@ Use
 
 format to include files. Easel includes will get compiled into index.html.  
 
+Try running 
+
+```sh
+gulp test
+``` 
+to ensure everything is stable.
+
 ## Features
 
 #### HTML 
 + Minify/Prettify
-+ Includes
++ [file-includes](https://www.npmjs.org/package/gulp-file-include)
 + H5BP
 
 #### CSS
@@ -51,13 +67,13 @@ format to include files. Easel includes will get compiled into index.html.
 #### Images
 + Compression with image-min
 
-#### Aux Task
-+ Use aux.js/build-aux.js to define misc files to transfer to your build folder 
+#### Template Task
++ Use gulp/task/template.js to bootstrap your own task
 
 #### Watch
 + Browser-Sync
 + Live Reload
-+ Local Server
++ [Connect](https://www.npmjs.org/package/gulp-connect)
 
 
 #### Build
@@ -113,14 +129,12 @@ Test your task with
 ```sh
 gulp newTask
 ```
-+ gulp-newer is automatically required on all task
++ gulp-changed is automatically required on all task
 Refer to community docs/write ups for details on how to customize your task further
 
 ### Task Performance
 
-['gulp-newer'](https://github.com/tschaub/gulp-newer) runs for gulp task. 
-
-Gulp task can be 2-3x faster with cache & 'newer' than without after files are cached(second run). 
+['gulp-changed'](https://www.npmjs.org/package/gulp-changed) runs for relevant gulp task.
 
 ### Gulp Commands
 
@@ -137,7 +151,7 @@ alias gjsb="gulp script-build"
 alias gh="gulp scaffold"
 alias ghb="gulp build-scaffold"
 alias gb="gulp build"
-alias gw="gulp watch"
+alias gw="gulp paint"
 ```
 
 #### Watch For Changes & Automatically Refresh Across Devices
@@ -194,25 +208,34 @@ alias gb="gulp build-studio"
 alias gbs="gulp browser-sync"
 alias gptest="gs; gc; gsc; gic; gj; gstu;"
 alias buildtest="gsb; gc; gsc; gab; gic; gscb; gj; gb;"
+alias ta="gulp test-app"
+alias tb="gulp test-build"
+alias t="gulp test" 
+# http://tinyurl.com/testruntime
+# real - start to finish
+# user - user mode code
+# sys - kernal code
+alias test="time runtest"
 function runtest {
-    gptest
-    buildtest
+    ta
+    sleep 10
+    tb
 }
 ```
 
-Use 'gptest' after running 'gp' to test task browser sync & server
+Use 'gptest' after running 'gulp paint' to test task w/ browser sync & server
 
-Run build test to test all modules with the exception of 'gulp paint'
+Run 'gulp test-app && gulp test-build' to test all modules with the exception of 'gulp paint'
 
 ## Config
 
 #### Paths
 
-I plan on using a Paths var to organize....paths
+Global paths are set @ gulp/index.js
 
 ## Vendor CSS 
 
-h5bp
+jQuery 2.1.1 is located in node_modules/jquery
 
 ## Troubleshooting
 

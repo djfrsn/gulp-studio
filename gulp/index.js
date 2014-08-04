@@ -1,9 +1,12 @@
 var fs = require('fs');
 	onlyScripts = require('./util/scriptFilter');
 	tasks = fs.readdirSync('./gulp/tasks/').filter(onlyScripts);
-	gulpFilter = require('gulp-filter');
-	filterCritical = gulpFilter(['*', '!app/styles/critical/**/*.scss']);
-	filterBrushAndVendors = gulpFilter([ '*', '!app/lib/js/brush/*.js', '!app/lib/js/vendor/*.js' ]);
+	setup = {
+		studio: [
+        './gulp-studio/**/**/**/**/*.*'
+    	],
+		root: './'
+	}
 	sourced = {
 		app: 'app/',
 		easel: 'app/easel.html',
@@ -13,7 +16,8 @@ var fs = require('fs');
 		sass: 'app/lib/styles/**/*.scss',
 		css: 'app/lib/styles/paint.css',
 		criticalSASS: 'app/lib/styles/critical/**/*.scss',
-		critical: 'app/lib/styles/critical/',
+		criticalCSS: 'app/lib/styles/critical/critical.css',
+		criticaldir: 'app/lib/styles/critical/',
 		styles: 'app/lib/styles/',
 		brush: 'app/lib/js/brush/brush.js',
 		brushdir: 'app/lib/js/brush/', 

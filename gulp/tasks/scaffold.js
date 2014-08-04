@@ -1,14 +1,14 @@
 // Compile scaffold file-includes, prettify stream & transport to 'app/index.html'
-var gulp = require('gulp');
-	remember = require('gulp-remember'); 
-	fileinclude = require('gulp-file-include'); // https://github.com/coderhaoxin/gulp-file-include
+var gulp = require('gulp'),
+	remember = require('gulp-remember'), 
 	rename = require("gulp-rename");
 
 gulp.task('compile-scaffold', function() {
 
 	return gulp.src(sourced.html)
-		.pipe(newer(sourced.includes))
+		.pipe(changed(sourced.includes))
 		.pipe(remember(sourced.easel))
+		.pipe(plumber({errorHandler: notify.onError()}))
 		.pipe(fileinclude())
 		.pipe(rename("index.html"))
 		.pipe(browserSync.reload({stream:true, once: true}))

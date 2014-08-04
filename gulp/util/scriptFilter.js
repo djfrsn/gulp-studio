@@ -1,7 +1,13 @@
-var path = require("path");
-	newer = require('gulp-newer'); 
-	notify = require("gulp-notify");
-
+var path = require('path');
+	changed = require('gulp-changed');
+	sass = require('gulp-ruby-sass');
+	notify = require('gulp-notify');
+	plumber = require('gulp-plumber');
+	fileinclude = require('gulp-file-include');
+	runSequence = require('run-sequence');
+	browserSync = require('browser-sync');
+	gulpFilter = require('gulp-filter');
+	
 // Filters out non .coffee and .js files. Prevents
 // accidental inclusion of possible hidden files
 module.exports = function(name) {

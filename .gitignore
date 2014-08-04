@@ -1,5 +1,6 @@
 *.css
 *.css.map
+*.scss
 app/index.html
 node_modules
 .sass-cache
