@@ -127,11 +127,10 @@ Task boilerplate:
 var gulp = require('gulp');
 
 gulp.task('newTask', function () {
-    var source = 'my/source';
-    var dest = 'my/dist';
-    // do something
-    return gulp.src(source)
-    .pipe(gulp.dest(dest));
+
+    return gulp.src(sourced.app)
+    	// do something here
+    	.pipe(gulp.dest(dist.dir));
 });  
 ```
 Test your task with 
