@@ -80,7 +80,7 @@ Compatible with PHP, ASP, Rails and more.
 ```sh
 $ gulp studio
 ```
-Run all task essential to compile optimized '/app' 
+Run all task essential to compile optimized 'app/' 
 
 ```sh
 $ gulp build-studio
