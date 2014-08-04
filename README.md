@@ -2,9 +2,10 @@
 
 [Repository of modern web development tooling and components](http://studio.dennisjefferson.com)....batmans tool bet. 
 
+
 ## Quickstart
 
-[Install/Run Slush-Studio](https://github.com/djfrsn/slush-studio)
+[Optiona: Install Slush-Studio](https://github.com/djfrsn/slush-studio)
 
 Install dependencies
 
@@ -12,20 +13,12 @@ Install dependencies
 npm install
 ```
 
-First 
-
-```sh
-gulp setup
-```
-
-to download the latest version of [gulp-studio](https://github.com/djfrsn/gulp-studio).
-
-Now run
+Run
 
 ```sh
 gulp
 ```
-Vivy!
+This compiles Studi˚ & laucnhes browser-sync w/ a connect server. Vivy!
 
 Head to app/easel.html || app/lib/ & start building your creation!  
 
@@ -44,7 +37,20 @@ gulp test
 ``` 
 to ensure everything is stable.
 
+
 ## Features
+
+#### Watch For Changes & Automatically Refresh Across Devices
+
+```sh
+$ gulp paint
+```
+
+Boot a [connect](https://www.npmjs.org/package/gulp-connect) server & open your project in the browser w/ [browser-sync](http://www.browsersync.io/), then set a watch to live reload the browser when your html/sass/js files change. 
+
+Your app loads at 'http://localhost:3000' by default, & an external address is provided to access your app from multiple devices with features such as action & code sync provided by browser-sync.
+
+Compatible with PHP, ASP, Rails and more.
 
 #### HTML 
 + Minify/Prettify
@@ -58,7 +64,6 @@ to ensure everything is stable.
 + Lint
 + Comb CSS 
 
-
 #### JS 
 + Minify
 + Concat
@@ -70,21 +75,26 @@ to ensure everything is stable.
 #### Template Task
 + Use gulp/task/template.js to bootstrap your own task
 
-#### Watch
-+ Browser-Sync
-+ Live Reload
-+ [Connect](https://www.npmjs.org/package/gulp-connect)
+### Build & Optimize
 
+```sh
+$ gulp studio
+```
+Run all task essential to compile optimized '/app' 
 
-#### Build
-
-Run 
-
-```sh 
-gulp build-studio
+```sh
+$ gulp build-studio
 ```
 
-to create distributable app
+Create distributable application in 'dist/' dir
+
+Run build versions of default task:
++ Styles - Compile SASS, prefix, comb('zen'), minify, check for errors & pipe to dest.
++ Compile-Critical - Inline Critical CSS
++ JS - Minify, Concat & Lint
++ Img - Run imgmin default settings
++ Scaffold - Compile includes & Minify
++ Aux - Grabs misc files parallel to index.html path & provides performance insights w/ pagespeed(Future ver)
 
 ## Filesystem 
 
@@ -105,7 +115,7 @@ image-min compress files within 'app/lib/img/**/*' on 'gulp build-studio'
 #### JS
 
 Automatic minification on build 
-Set files to concat with concat.js paths
+Files concat with concat.js and additonal js files can be added @ gulp/index.js under sourced.jslib var
 
 #### Creating new task
 
@@ -129,12 +139,13 @@ Test your task with
 ```sh
 gulp newTask
 ```
-+ gulp-changed is automatically required on all task
-Refer to community docs/write ups for details on how to customize your task further
 
-### Task Performance
+
+### Performance
 
 ['gulp-changed'](https://www.npmjs.org/package/gulp-changed) runs for relevant gulp task.
+
+Will include node_module [Bench](https://www.npmjs.org/package/bench) for benchmarking in the future
 
 ### Gulp Commands
 
@@ -154,40 +165,18 @@ alias gb="gulp build"
 alias gw="gulp paint"
 ```
 
-#### Watch For Changes & Automatically Refresh Across Devices
+#### Testing
+
+Run 
 
 ```sh
-$ gulp paint
+gulp test
 ```
 
-This boots a connect server that loads your project in the browser, then watches your html/sass/js for changes & live updates. 
-
-### Build & Optimize
-
-```sh
-$ gulp studio
-```
-
-Run all task essential to compile optimized '/app' 
+for error checking on 'studio' & 'build-studio' task
 
 
-```sh
-$ gulp build-paint
-```
-
-Run build versions of default task:
-+ Styles - Compile SASS, prefix, comb('zen'), minify, check for errors & pipe to dest.
-+ Compile-Critical - Inline Critical CSS
-+ JS - Minify, Concat & Lint
-+ Img - Run imgmin default settings
-+ Scaffold - Compile includes & Minify
-+ Aux - Grabs misc files parallel to index.html path & provides performance insights w/ pagespeed(Future ver)
-
-### Testing
-
-Using bash to test all modules.......I know its ugly...but it works. 
-
-#### Gulp Studi˚ CLI commands
+### Gulp Studi˚ CLI commands
 
 ```sh
 # Gulp Studi˚ 
@@ -225,7 +214,7 @@ function runtest {
 
 Use 'gptest' after running 'gulp paint' to test task w/ browser sync & server
 
-Run 'gulp test-app && gulp test-build' to test all modules with the exception of 'gulp paint'
+Run 'test' for thorough testing and time reports 
 
 ## Config
 
@@ -233,9 +222,11 @@ Run 'gulp test-app && gulp test-build' to test all modules with the exception of
 
 Global paths are set @ gulp/index.js
 
-## Vendor CSS 
+## Vendors 
 
-jQuery 2.1.1 is located in node_modules/jquery
+[h5bp](http://html5boilerplate.com/) is baked into easel/index
+
+jQuery 2.1.1 can be found in node_modules/jquery
 
 ## Troubleshooting
 
