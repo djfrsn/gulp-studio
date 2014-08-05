@@ -1,11 +1,11 @@
 ## Studi˚
 
-[Repository of modern web development tooling and components](http://studio.dennisjefferson.com)....batmans tool bet. 
+[Prototype Gulp task runner](http://studio.dennisjefferson.com) mainly concerned with SASS, Browser-Sync, HTML includes & file minfication. 
 
 
 ## Quickstart
 
-[Optiona: Install Slush-Studio](https://github.com/djfrsn/slush-studio)
+[Optional: Install Slush-Studio](https://github.com/djfrsn/slush-studio)
 
 Install dependencies
 
