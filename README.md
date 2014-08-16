@@ -2,6 +2,10 @@
 
 [Prototype Gulp task runner](http://studio.dennisjefferson.com) mainly concerned with SASS, Browser-Sync, HTML includes & file minfication. 
 
+#### Status
+
+Studi˚ v0.1.2 is currently undergoing real world test to see what is needed and what issues may exist. Usage without the desire to maintain Studi˚ is not recommended.
+
 
 ## Quickstart
 
