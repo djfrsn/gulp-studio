@@ -8,10 +8,8 @@ var gulp = require('gulp'),
 gulp.task('build-scaffold', function() {
 
 	return gulp.src(sourced.index)
-		.pipe(fileinclude())
 		.pipe(size())
 		.pipe(htmlmin({collapseWhitespace: true, removeComments: true, minifyCSS: true, minifyJS: true}))
-		.pipe(rename("index.html"))
 		.pipe(size())
 		.pipe(gulp.dest(dist.dir));
 });

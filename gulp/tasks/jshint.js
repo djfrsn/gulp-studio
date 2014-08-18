@@ -12,5 +12,4 @@ gulp.task('jshint', function() {
             .pipe(plumber({errorHandler: notify.onError()}))
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))
-            // Add gulp-notify
 });

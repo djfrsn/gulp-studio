@@ -12,10 +12,9 @@ gulp.task('build-styles', function () {
         .pipe(filterCritical)
         .pipe(sass({sourcemap: false})) 
         .pipe(prefix('last 2 version', "> 1%", "Firefox ESR", "Opera 12.1", "ie 9", "ie 8", "ie 7"))
-        .pipe(comb('zen'))
         .pipe(size())
+        .pipe(comb('zen'))
         .pipe(minifyCSS())
         .pipe(size())
-        // Add gulp-notify
         .pipe(gulp.dest(dist.styles));
 });
