@@ -2,6 +2,7 @@
 var gulp = require('gulp'),
 	rimraf = require('rimraf'); // rimraf directly
 
+
 	gulp.task('clean', function (cb) {
     rimraf('./dist', cb);
 	});
@@ -9,6 +10,13 @@ var gulp = require('gulp'),
 		gulp.src(sourced.app)
   			.pipe(notify('Studi˚ built ≈'));
 	});
+
+
+	gulp.task('crit', function(callback) {
+			runSequence( 'compile-critical', 'scaffold', 'inline-critical', 
+				      callback); // Compile crit css, then refresh index head with new script
+	}); // tag using scaffold, finally we can convert the script tag to inline css with inline-critical
+
 
 	// This will run in this order:
 	// * styles-build, compile-critical  in series
