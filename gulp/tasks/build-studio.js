@@ -12,7 +12,6 @@ var gulp = require('gulp'),
 	gulp.task('compile-critical', function () {
 
     return gulp.src(sourced.criticalSASS)
-        .pipe(changed(sourced.app, {hasChanged: changed.compareSha1Digest}))
         .pipe(plumber({errorHandler: notify.onError()}))
         .pipe(sass({sourcemap: false, style: 'expanded'}))
         .pipe(prefix('last 2 version', "> 1%", "Firefox ESR", "Opera 12.1", "ie 9", "ie 8", "ie 7"))
