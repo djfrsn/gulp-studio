@@ -2,7 +2,7 @@
 var gulp = require('gulp');
 
     gulp.task('brush', function(callback) {
-        runSequence(  'jshint', 'concat-js', 'uglify',
+        runSequence(  'jshint', 'concat-js',
           callback);
     });
 
