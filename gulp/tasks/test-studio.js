@@ -7,16 +7,18 @@ gulp.task('testMsg', function() {
 });
 
 gulp.task('test-app', function(callback) {
-		runSequence( 'compile-sass', 'sync-css', 'compile-critical', 'scaffold',
-	      ['inline-critical', 'concat-js'],
-	      'studio',
+		runSequence( 'styles', 'scaffold',
+	      [ 'brush', 'combCSS' ],
+	      'studioMsg',
 	      callback);
 });
 
 gulp.task('test-build', function(callback) {
 		runSequence( 'clean', 'build-styles', 'compile-critical',
-	      ['scaffold', 'brush', 'build-aux'],
-	      'inline-critical', 'build-scaffold',
+	      [ 'scaffold', 'brush', 'build-aux' ],
+	      'uglify-js', 'inline-critical', 
+	      [ 'build-brush', 'build-scaffold' ],
+	      'buildstudioMsg',
 	      callback);
 });
 

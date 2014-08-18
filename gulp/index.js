@@ -29,6 +29,7 @@ var fs = require('fs');
 	};
 	dist = {
 		styles: 'dist/lib/styles/',
+		js: 'dist/lib/js/brush/',
 		img: './app/lib/img/**/*',
 		imgdir: './dist/lib/img',
 		aux: [ 'app/humans.txt', 'app/robots.txt', 'app/favicon.ico' ],

@@ -13,7 +13,7 @@ var gulp = require('gulp');
 	// * inline-critical and brush in parallel
 	// * Finally call the callback function
 gulp.task('studio', function(callback) {
-		runSequence('styles', 'scaffold',
+		runSequence( 'styles', 'scaffold',
 	      [ 'brush', 'combCSS' ],
 	      'studioMsg',
 	      callback);

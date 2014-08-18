@@ -46,8 +46,10 @@ var gulp = require('gulp'),
 	// * Finally call the callback function
 gulp.task('build-studio', function(callback) {
 		runSequence( 'clean', 'build-styles', 'compile-critical',
-	      ['scaffold', 'brush', 'build-aux'],
-	      'uglify-js', 'inline-critical', 'build-scaffold', 'buildstudioMsg',
+	      [ 'scaffold', 'brush', 'build-aux' ],
+	      'uglify-js', 'inline-critical', 
+	      [ 'build-brush', 'build-scaffold' ],
+	      'buildstudioMsg',
 	      callback);
 });
  
