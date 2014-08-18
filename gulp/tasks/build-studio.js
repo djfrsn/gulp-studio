@@ -18,6 +18,13 @@ var gulp = require('gulp'),
         .pipe(prefix('last 2 version', "> 1%", "Firefox ESR", "Opera 12.1", "ie 9", "ie 8", "ie 7"))
         .pipe(gulp.dest(sourced.criticaldir));
 	});
+	    
+	gulp.task('dist-font', function() {
+	
+		return gulp.src(sourced.font) 
+			.pipe(gulp.dest(dist.font));
+	});
+
 
 	gulp.task('uglify-js', function() {
 	
@@ -46,9 +53,9 @@ var gulp = require('gulp'),
 	// * Finally call the callback function
 gulp.task('build-studio', function(callback) {
 		runSequence( 'clean', 'build-styles', 'compile-critical',
-	      [ 'scaffold', 'brush', 'build-aux' ],
+	      [ 'scaffold', 'brush', 'dist-font' ],
 	      'uglify-js', 'inline-critical', 
-	      [ 'build-brush', 'build-scaffold' ],
+	      [ 'build-img', 'build-brush', 'build-scaffold' ],
 	      'buildstudioMsg',
 	      callback);
 });

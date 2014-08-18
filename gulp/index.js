@@ -10,6 +10,8 @@ var fs = require('fs');
 	sourced = {
 		app: 'app/',
 		easel: 'app/easel.html',
+		font: './app/lib/font/**/*',
+		img: './app/lib/img/**/*',
 		index: 'app/index.html',
 		html: [ 'app/lib/include/**/*.html', 'app/easel.html' ],
 		includes: 'app/lib/include/**/*.html',
@@ -30,8 +32,8 @@ var fs = require('fs');
 	dist = {
 		styles: 'dist/lib/styles/',
 		js: 'dist/lib/js/brush/',
-		img: './app/lib/img/**/*',
-		imgdir: './dist/lib/img',
+		font: 'dist/lib/font/',
+		img: 'dist/lib/img/',
 		aux: [ 'app/humans.txt', 'app/robots.txt', 'app/favicon.ico' ],
 		dir: 'dist/'
 	};

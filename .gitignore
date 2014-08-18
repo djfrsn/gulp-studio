@@ -7,6 +7,4 @@ dist
 .tmp
 npm-debug.log
 helper
-app/lib/fonts/
-app/lib/img/
 app/lib/js/brush/brush.js

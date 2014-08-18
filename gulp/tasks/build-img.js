@@ -1,13 +1,10 @@
 // Minify imgs & transport to 'dist/'
 var gulp       = require('gulp'),
-	imagemin   = require('gulp-imagemin'), // https://github.com/sindresorhus/gulp-imagemin
-	size = require('gulp-filesize'); // https://github.com/Metrime/gulp-filesize
+	imagemin   = require('gulp-imagemin'); // https://github.com/sindresorhus/gulp-imagemin
 	
 gulp.task('build-img', function() {
 
-	return gulp.src(dist.img)
-		.pipe(size())
+	return gulp.src(sourced.img)
 		.pipe(imagemin()) // Optimize img
-		.pipe(size())
-		.pipe(gulp.dest(dist.imgdir));
+		.pipe(gulp.dest(dist.img));
 });
