@@ -9,8 +9,8 @@ var gulp = require('gulp');
 
 
 	// This will run in this order:
-	// * styles, scaffold in series
-	// * brush and combCSS in parallel
+	// * styles, compile-critical, scaffold in series
+	// * inline-critical and brush in parallel
 	// * Finally call the callback function
 gulp.task('studio', function(callback) {
 		runSequence('styles', 'scaffold',

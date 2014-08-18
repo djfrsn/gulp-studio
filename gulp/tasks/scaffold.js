@@ -1,4 +1,4 @@
-// Compile scaffold file-includes, prettify stream & transport to 'app/index.html'
+// Compile scaffold file-includes & transform to 'app/index.html'
 var gulp = require('gulp'),
 	remember = require('gulp-remember'), 
 	rename = require("gulp-rename");

@@ -57,7 +57,7 @@ Your app loads at 'http://localhost:3000' by default, & an external address is p
 Compatible with PHP, ASP, Rails and more.
 
 #### HTML 
-+ Minify/Prettify
++ Minify
 + [file-includes](https://www.npmjs.org/package/gulp-file-include)
 + H5BP
 
@@ -195,7 +195,6 @@ alias ga="gulp aux"
 alias gab="gulp build-aux"
 alias gc="gulp compile-critical"
 alias gic="gulp inline-critical"
-alias gpe="gulp prettify-index"
 alias gb="gulp build-studio"
 alias gbs="gulp browser-sync"
 alias gptest="gs; gc; gsc; gic; gj; gstu;"
