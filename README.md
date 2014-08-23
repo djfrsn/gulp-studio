@@ -22,7 +22,7 @@ Run
 ```sh
 gulp
 ```
-This compiles Studi˚ & laucnhes browser-sync w/ a connect server. Vivy!
+This compiles Studi˚ & launches browser-sync w/ a connect server. Vivy!
 
 Head to app/easel.html || app/lib/ & start building your creation!  
 
