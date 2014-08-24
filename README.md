@@ -1,15 +1,23 @@
 ## Studi˚
 
-[Prototype Gulp task runner](http://studio.dennisjefferson.com) mainly concerned with SASS, Browser-Sync, HTML includes & file minfication. 
+[Prototype Gulp task runner](http://studio.dennisjefferson.com) mainly concerned with WP development w/ Studi˚. 
 
 #### Status
 
-Studi˚ v0.1.2 is currently undergoing real world test to see what is needed and what issues may exist. Usage without the desire to maintain Studi˚ is not recommended.
+Studi˚v0.1.2 is currently undergoing real world test to see what is needed and what issues may exist. Usage without the desire to maintain Studi˚ is not recommended.
 
 
 ## Quickstart
 
-[Optional: Install Slush-Studio](https://github.com/djfrsn/slush-studio)
+Install Gulp if you havent! 
+
+Drop scaffolding with [Slush-Studio](https://github.com/djfrsn/slush-studio)
+
+or
+
+```sh
+mkdir studio && cd studio && git clone https://github.com/djfrsn/gulp-studio.git .
+```
 
 Install dependencies
 
@@ -29,7 +37,7 @@ Head to app/easel.html || app/lib/ & start building your creation!
 Use
 
 ```sh
-@@include('include/hello.html')
+@@include('lib/include/hello.html')
 ```
 
 format to include files. Easel includes will get compiled into index.html.  

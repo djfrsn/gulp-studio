@@ -10,11 +10,11 @@ var fs = require('fs');
 	sourced = {
 		app: 'app/',
 		easel: 'app/easel.html',
-		font: './app/lib/font/**/*',
-		img: './app/lib/img/**/*',
+		fonts: './app/lib/fonts/**/*',
+		imgs: './app/lib/imgs/**/*',
 		index: 'app/index.html',
-		html: [ 'app/lib/include/**/*.html', 'app/easel.html' ],
-		includes: 'app/lib/include/**/*.html',
+		html: [ 'app/lib/includes/**/*.html', 'app/easel.html' ],
+		includes: 'app/lib/includes/**/*.html',
 		sass: 'app/lib/styles/**/*.scss',
 		css: 'app/lib/styles/paint.css',
 		criticalSASS: 'app/lib/styles/critical/**/*.scss',
@@ -32,8 +32,8 @@ var fs = require('fs');
 	dist = {
 		styles: 'dist/lib/styles/',
 		js: 'dist/lib/js/brush/',
-		font: 'dist/lib/font/',
-		img: 'dist/lib/img/',
+		fonts: 'dist/lib/fonts/',
+		imgs: 'dist/lib/imgs/',
 		aux: [ 'app/humans.txt', 'app/robots.txt', 'app/favicon.ico' ],
 		dir: 'dist/'
 	};

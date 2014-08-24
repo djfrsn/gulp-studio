@@ -18,10 +18,10 @@ var gulp = require('gulp'),
         .pipe(gulp.dest(sourced.criticaldir));
 	});
 	    
-	gulp.task('dist-font', function() {
+	gulp.task('dist-fonts', function() {
 	
-		return gulp.src(sourced.font) 
-			.pipe(gulp.dest(dist.font));
+		return gulp.src(sourced.fonts) 
+			.pipe(gulp.dest(dist.fonts));
 	});
 
 
@@ -40,6 +40,16 @@ var gulp = require('gulp'),
         .pipe(gulp.dest(sourced.app));
     });
 
+    imagemin   = require('gulp-imagemin'); // https://github.com/sindresorhus/gulp-imagemin
+	
+	gulp.task('build-imgs', function() {
+	
+		return gulp.src(sourced.imgs)
+			.pipe(imagemin()) // Optimize imgs
+			.pipe(gulp.dest(dist.imgs));
+	});
+
+
 	gulp.task('buildstudioMsg', function() {
 		gulp.src(sourced.app)
   			.pipe(notify('Studi˚ built ≈vy'));
@@ -52,9 +62,9 @@ var gulp = require('gulp'),
 	// * Finally call the callback function
 gulp.task('build-studio', function(callback) {
 		runSequence( 'clean', 'build-styles', 'compile-critical',
-	      [ 'scaffold', 'brush', 'dist-font' ],
+	      [ 'scaffold', 'brush', 'dist-fonts' ],
 	      'uglify-js', 'inline-critical', 
-	      [ 'build-img', 'build-brush', 'build-scaffold' ],
+	      [ 'build-imgs', 'build-brush', 'build-scaffold' ],
 	      'buildstudioMsg',
 	      callback);
 });
