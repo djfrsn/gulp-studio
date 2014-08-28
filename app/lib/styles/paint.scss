@@ -5,7 +5,6 @@
 */
 
 // Vendor
-@import "_vendor/_h5bp";
 
 // Tooling
 @import "_tooling/_utils";
@@ -25,9 +24,7 @@
 @import "_components/_icons";
 
 // Modules
-@import "_modules/_header";
-@import "_modules/_body";
-@import "_modules/_footer";
+@import "_modules/_main";
 
 // Make sure this is last to override anything else 
 @import "_tooling/_helper";
