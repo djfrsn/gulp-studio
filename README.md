@@ -4,8 +4,7 @@
 
 #### Status
 
-Studi˚v0.1.2 is currently undergoing real world test to see what is needed and what issues may exist. Usage without the desire to maintain Studi˚ is not recommended.
-
+Studi˚v0.1.2 is currently in the process of being tested. If your not interested in maintaing Studi˚ I would check back later.
 
 ## Quickstart
 
@@ -242,7 +241,7 @@ Global paths are set @ gulp/index.js
 
 ## Vendors 
 
-[h5bp](http://html5boilerplate.com/) is baked into easel/index
+[h5bp](http://html5boilerplate.com/) will be included in the future.
 
 jQuery 2.1.1 can be found in node_modules/jquery
 
@@ -285,7 +284,7 @@ Contributions, questions and comments are all welcome and encouraged.
 ## Credits
 
 [Google Web Starter Kit](https://github.com/google/web-starter-kit)
-    Readme template & being the "gold standard"
+    Readme template & great example code
 
 [Greypants gulp-starter](https://github.com/greypants/gulp-starter)
     Gulp framework & filesystem 
