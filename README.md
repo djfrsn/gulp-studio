@@ -42,6 +42,14 @@ Use
 
 format to include files. Easel includes will get compiled into index.html.  
 
+Open 'gulp/task/styles.js' and edit the sass compiler to 
+
+```sh
+.pipe(sass({sourcemap: true, sourcemapPath: '.', style: 'compact'}))
+```
+
+turn sourcemaps on. 
+
 Try running 
 
 ```sh

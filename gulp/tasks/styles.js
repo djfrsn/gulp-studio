@@ -9,7 +9,7 @@ gulp.task('styles', function () {
         .pipe(changed(sourced.app, {hasChanged: changed.compareSha1Digest}))
         .pipe(filterCritical)
         .pipe(plumber({errorHandler: notify.onError()}))
-        .pipe(sass({sourcemap: true, sourcemapPath: '.', style: 'compact'}))
+        .pipe(sass({sourcemap: false, sourcemapPath: '.', style: 'compact'}))
         .pipe(gulp.dest(sourced.styles))
         .pipe(browserSync.reload({stream:true, once: true}));
 });
