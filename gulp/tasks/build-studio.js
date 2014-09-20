@@ -56,9 +56,9 @@ var gulp = require('gulp'),
 	});
 
 	// This will run in this order:
-	// * styles-build, compile-critical  in series
-	// * scaffold and build-aux in parallel
-	// * inline-critical, build-scaffold in series
+	// * 
+	// * 
+	// * 
 	// * Finally call the callback function
 gulp.task('build-studio', function(callback) {
 		runSequence( 'clean', 'build-styles', 'compile-critical',
