@@ -188,6 +188,14 @@ alias gw="gulp paint"
 Run 
 
 ```sh
+box();
+```
+
+in browser dev tools console to outline all page elements for layout debugging. 
+
+Run 
+
+```sh
 gulp test
 ```
 
