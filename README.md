@@ -10,7 +10,7 @@ Studi˚v0.1.2 is currently in the process of being tested. If your not intereste
 
 Install Gulp if you havent! 
 
-Drop scaffolding with [Slush-Studio](https://github.com/djfrsn/slush-studio)
+Deploy scaffolding with [Slush-Studio](https://github.com/djfrsn/slush-studio). This also gives access to a version of Studi˚ that works with Wordpress using Vagrants.
 
 or
 
