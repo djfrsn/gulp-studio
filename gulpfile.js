@@ -166,6 +166,7 @@ gulp.task('browser-sync', function() {
     var browserSync = require('browser-sync');
     browserSync({
             proxy: "http://localhost:9000/",
+            notify: false,
     });
 
 });
