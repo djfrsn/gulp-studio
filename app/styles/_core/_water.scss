@@ -19,7 +19,7 @@
 	@if $media == md { /* 1200px */
 		@media (min-width: 75em) { @content; }		
 	}
-	@if $media == xlg { /* 1440px */
+	@if $media == lg { /* 1440px */
 		@media (min-width: 90em) { @content; }		
 	}
 }
