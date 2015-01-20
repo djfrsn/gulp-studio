@@ -11,33 +11,39 @@ var gulp = require('gulp'),
         index: './app/index.html',
         html: './app/*.html',
         webcomponents: [
-        './app/web-components/**/**/*.html', 
-        './app/web-components/**/**/*.css', 
-        './app/web-components/**/**/*.js'
+        './app/web_components/**/**/*.html', 
+        './app/web_components/**/**/*.css', 
+        './app/web_components/**/**/*.js'
         ],
-        paintcss: './app/styles/paint.css',
+        paint: './app/styles/paint.css',
         css: './app/**/**/*.css',
         scss: './app/styles/**/*.scss',
         styles: './app/styles/',
+        LAB: ['./app/scripts/LAB.js', './app/scripts/brush.x.js'],
         brush: './app/scripts/brush.js',
+        brushx: './app/scripts/brush.x.js',
+        app: './app/scripts/app/',
+        aux: [ 'app/*.{ico,png,txt,md}', 'app/.htaccess'],
         js: './app/scripts/'
     },
     dist = {
-        webcomponents: './dist/web-components/',
+        webcomponents: './dist/web_components/',
         index: './dist/index.html',
         styles: './dist/styles/',
+        css: './dist/styles/*.css',
+        paint: './dist/styles/paint.css',
+        rootjs: './dist/scripts/*.js',
         js: './dist/scripts/',
         fonts: './dist/styles/fonts/',
         imgs: './dist/imgs/',
-        aux: [ 'app/*.{ico,png,txt,md}', 'app/.htaccess'],
         root: './dist/'
     };
-
 
 gulp.task('cleanscripts', function (cb) {
     var rimraf = require('rimraf'); 
         rimraf('dist/scripts/fonts.js', cb);
 });
+
 gulp.task('clean', function (cb) {
     var rimraf = require('rimraf'); 
         rimraf(dist.root, cb);
@@ -74,8 +80,12 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('misc', function () {
-    return gulp.src(dist.aux)
+    return gulp.src(app.aux)
         .pipe(gulp.dest(dist.root));
+});
+gulp.task('LAB', function () {
+    return gulp.src(app.LAB)
+        .pipe(gulp.dest(dist.js));
 });
 
 gulp.task('webcomponents', function () {
@@ -84,7 +94,6 @@ gulp.task('webcomponents', function () {
 });
 
 gulp.task("replace", function() {
-
 
     return gulp.src(['app/scripts/fonts.js'])
         .pipe($.replace('../', ''))
@@ -97,39 +106,92 @@ gulp.task("inline", function() {
         .pipe($.inlineSource())
         .pipe(gulp.dest(dist.root));
 });
+gulp.task('copystyles', function () {
+    return gulp.src([dist.paint])
+        .pipe($.rename({
+            basename: "site" // site.css
+        }))
+        .pipe(gulp.dest('dist/styles'));
+});
+
+gulp.task('uglify', function () {
+
+    gulp.src(dist.rootjs)
+    .pipe($.uglify())
+    .pipe(gulp.dest(dist.js))
+});
+
+gulp.task('build-styles', function () {
+    var moreCSS = require('gulp-more-css');
+
+    gulp.src(dist.css)
+    .pipe($.autoprefixer('> 1%'))
+    .pipe($.filesize())
+    .pipe($.uncss({
+        html: ['./app/index.html']
+    }))
+    .pipe($.combineMediaQueries({ log: true }))
+    .pipe(moreCSS({radical: true}))
+    .pipe($.filesize())
+    .pipe(gulp.dest(dist.styles))
+});
 
 gulp.task('styles', function () {
-    var Style = function (err) {  
-        $.util.log('Style(err):', $.util.colors.red(err.message));
+    var paint = function (err) {  
+        $.util.log('paint(err):', $.util.colors.red(err.message));
         $.util.beep();
     };
 
     return gulp.src(app.scss)
-        .pipe($.plumber({errorHandler: Style}))
+        .pipe($.plumber({errorHandler: paint}))
         .pipe($.sass({
             precision: 10
         }))
         .pipe(gulp.dest(app.styles));
 });
 
-gulp.task('html', ['styles'], function () {
+gulp.task('browserify', function () {
+  var transform = require('vinyl-transform'),
+      browserify = require('browserify');
+
+    var brush = function (err) {  
+        $.util.log('brush(err):', $.util.colors.white(err.message));
+        $.util.beep();
+    };
+
+  var browserified = transform(function(filename) {
+    var b = browserify(filename);
+    return b.bundle();
+  });
+  
+  return gulp.src(app.brush)
+    .pipe($.plumber({errorHandler: brush}))
+    .pipe(browserified)
+    .pipe($.rename('brush.x.js'))
+    .pipe(gulp.dest(app.js));
+});
+
+gulp.task('core', ['browserify'], function () {
     var assets = $.useref.assets();
 
     return gulp.src(app.html)
         .pipe(assets)
-        .pipe($.if('*.css', $.autoprefixer('> 1%')))
-        .pipe($.filesize())
-        .pipe($.if('*.js', $.uglify()))
-        .pipe($.if('*.css', $.combineMediaQueries({ log: true })))
-        .pipe($.if('*.css', $.minifyCss()))
-        .pipe($.filesize())
-        .pipe($.rev())
         .pipe(assets.restore())
         .pipe($.useref())
-        .pipe($.revReplace()) 
         .pipe(gulp.dest(dist.root));
 });
 
+gulp.task("rev", ['core'], function() {
+  var assets = $.useref.assets();
+
+  return gulp.src(app.html)
+    .pipe(assets)
+    .pipe($.rev())                // Rename the concatenated files
+    .pipe(assets.restore())
+    .pipe($.useref())
+    .pipe($.revReplace())         // Substitute in new filenames
+    .pipe(gulp.dest(dist.root));
+});
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
 
@@ -183,6 +245,7 @@ gulp.task('serve', ['styles', 'connect', 'browser-sync'], function () {
     ]).on('change', $.livereload.changed);
     
     gulp.watch(app.scss, ['styles']);
+    gulp.watch(app.brush, ['browserify']);
     gulp.watch('bower.json', ['wiredep']);
 });
 
@@ -199,7 +262,7 @@ gulp.task('finale', function() {
     $.util.beep();
     gulp.src(app.root)
     .pipe($.shell([
-      'tar -jcvf dist/app.tar.bz2 dist',
+      'cd dist; zip -r ../dist.zip *',
     ],
     {
          quiet: true
@@ -208,8 +271,8 @@ gulp.task('finale', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     var runSequence = require('run-sequence');
-    runSequence( [ 'replace', 'lint', 'images', 'fonts', 'misc', 'html', 'webcomponents'],
-      'inline', 'cleanscripts', 'finale',
+    runSequence( [ 'replace', 'LAB', 'lint', 'images', 'fonts', 'misc', 'rev', 'webcomponents'],
+      'inline', 'cleanscripts', 'uglify', 'build-styles', 'finale',
       callback);
 });
 
