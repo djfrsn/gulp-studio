@@ -4,7 +4,7 @@
 
 #### Status
 
-Studi˚v0.1.2 is currently in the process of being tested. If your not interested in maintaining Studi˚ I would check back later.
+Studi˚ has currently(Dec 14') been through major updates. The below docs are outdated. 
 
 ## Quickstart
 
