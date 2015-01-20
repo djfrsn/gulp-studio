@@ -1,5 +1,5 @@
 {
-  "name": "percie",
+  "name": "gulp-studio",
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
@@ -35,7 +35,6 @@
     "gulp-useref": "^1.0.2",
     "gulp-util": "^3.0.1",
     "jshint-stylish": "^1.0.0",
-    "more-css": "^0.8.4",
     "opn": "^1.0.0",
     "rimraf": "^2.2.8",
     "run-sequence": "^1.0.2",
