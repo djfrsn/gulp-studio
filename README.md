@@ -1,10 +1,10 @@
 ## Studi˚
 
-[Prototype Gulp task runner](http://studio.dennisjefferson.com) mainly concerned with WP development w/ Studi˚. 
+[Prototype Gulp task runner](http://studio.dennisjefferson.com) for building websites/apps, wordpress sites. 
 
 #### Status
 
-Studi˚ has currently(Dec 14') been through major updates. The below docs are outdated. 
+Studi˚ has currently(Dec 14') been through major updates. The below docs are deprecated. 
 
 ## Quickstart
 
