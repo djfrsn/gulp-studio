@@ -1,0 +1,9 @@
+{
+  "name": "djx",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.0",
+    "jquery": "~1.9.0"
+  },
+  "devDependencies": {}
+}
