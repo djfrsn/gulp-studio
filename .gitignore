@@ -1,6 +1,5 @@
 *.css
 *.css.map
-app/index.html
 node_modules
 .sass-cache
 dist

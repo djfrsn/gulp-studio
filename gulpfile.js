@@ -6,15 +6,9 @@ var gulp = require('gulp'),
         dir: './',
         root: './app/',
         bower: './app/bower_components/',
-        fonts: './app/styles/fonts/*',
         imgs: './app/imgs/**/*',
         index: './app/index.html',
         html: './app/*.html',
-        webcomponents: [
-        './app/web_components/**/**/*.html', 
-        './app/web_components/**/**/*.css', 
-        './app/web_components/**/**/*.js'
-        ],
         paint: './app/styles/paint.css',
         css: './app/**/**/*.css',
         scss: './app/styles/**/*.scss',
@@ -27,17 +21,30 @@ var gulp = require('gulp'),
         js: './app/scripts/'
     },
     dist = {
-        webcomponents: './dist/web_components/',
         index: './dist/index.html',
         styles: './dist/styles/',
         css: './dist/styles/*.css',
         paint: './dist/styles/paint.css',
         rootjs: './dist/scripts/*.js',
         js: './dist/scripts/',
-        fonts: './dist/styles/fonts/',
         imgs: './dist/imgs/',
         root: './dist/'
-    };
+    },
+    paint = function (err) {  
+        $.util.log('paint(err):', $.util.colors.red(err.message));
+        $.util.beep();
+    },
+    AUTOPREFIXER_BROWSERS = [
+        'ie >= 10',
+        'ie_mob >= 10',
+        'ff >= 30',
+        'chrome >= 34',
+        'safari >= 7',
+        'opera >= 23',
+        'ios >= 7',
+        'android >= 4.4',
+        'bb >= 10'
+    ];
 
 gulp.task('cleanscripts', function (cb) {
     var rimraf = require('rimraf'); 
@@ -49,23 +56,7 @@ gulp.task('clean', function (cb) {
         rimraf(dist.root, cb);
 });
 
-gulp.task('lint', function () {
-    var stylish = require('jshint-stylish');
-
-    return gulp.src(app.brush)
-        .pipe($.jshint())
-        .pipe($.jshint.reporter(stylish));
-});
-
-gulp.task('comb', function() {
-
-    return gulp.src(app.scss)   
-        .pipe($.comb())
-        .pipe(gulp.dest(app.styles));
-});
-
 gulp.task('images', function () {
-
     return gulp.src(app.imgs)
         .pipe($.cache($.imagemin({
             progressive: true,
@@ -74,80 +65,29 @@ gulp.task('images', function () {
         .pipe(gulp.dest(dist.imgs));
 });
 
-gulp.task('fonts', function () {
-    return gulp.src(app.fonts)
-        .pipe(gulp.dest(dist.fonts));
-});
-
 gulp.task('misc', function () {
     return gulp.src(app.aux)
         .pipe(gulp.dest(dist.root));
 });
-gulp.task('LAB', function () {
-    return gulp.src(app.LAB)
-        .pipe(gulp.dest(dist.js));
-});
-
-gulp.task('webcomponents', function () {
-    return gulp.src(app.webcomponents)
-        .pipe(gulp.dest(dist.webcomponents));
-});
 
 gulp.task("replace", function() {
-
     return gulp.src(['app/scripts/fonts.js'])
         .pipe($.replace('../', ''))
         .pipe(gulp.dest(dist.js));
 });
 
-gulp.task("inline", function() {
+gulp.task('lint', function () {
+    var stylish = require('jshint-stylish');
 
-    return gulp.src(dist.index)
-        .pipe($.inlineSource())
-        .pipe(gulp.dest(dist.root));
-});
-gulp.task('copystyles', function () {
-    return gulp.src([dist.paint])
-        .pipe($.rename({
-            basename: "site" // site.css
-        }))
-        .pipe(gulp.dest('dist/styles'));
+    return gulp.src(app.brush)
+        .pipe($.jshint())
+        .pipe($.jshint.reporter(stylish));
 });
 
 gulp.task('uglify', function () {
-
-    gulp.src(dist.rootjs)
-    .pipe($.uglify())
-    .pipe(gulp.dest(dist.js))
-});
-
-gulp.task('build-styles', function () {
-    var moreCSS = require('gulp-more-css');
-
-    gulp.src(dist.css)
-    .pipe($.autoprefixer('> 1%'))
-    .pipe($.filesize())
-    .pipe($.uncss({
-        html: ['./app/index.html']
-    }))
-    .pipe($.combineMediaQueries({ log: true }))
-    .pipe(moreCSS({radical: true}))
-    .pipe($.filesize())
-    .pipe(gulp.dest(dist.styles))
-});
-
-gulp.task('styles', function () {
-    var paint = function (err) {  
-        $.util.log('paint(err):', $.util.colors.red(err.message));
-        $.util.beep();
-    };
-
-    return gulp.src(app.scss)
-        .pipe($.plumber({errorHandler: paint}))
-        .pipe($.sass({
-            precision: 10
-        }))
-        .pipe(gulp.dest(app.styles));
+    return gulp.src(dist.rootjs)
+        .pipe($.uglify())
+        .pipe(gulp.dest(dist.js))
 });
 
 gulp.task('browserify', function () {
@@ -171,37 +111,67 @@ gulp.task('browserify', function () {
     .pipe(gulp.dest(app.js));
 });
 
-gulp.task('core', ['browserify'], function () {
-    var assets = $.useref.assets();
-
-    return gulp.src(app.html)
-        .pipe(assets)
-        .pipe(assets.restore())
-        .pipe($.useref())
+gulp.task("inline", function() {
+    return gulp.src(dist.index)
+        .pipe($.inlineSource())
         .pipe(gulp.dest(dist.root));
 });
 
-gulp.task("rev", ['core'], function() {
-  var assets = $.useref.assets();
+gulp.task('filesize', function () {
+    return gulp.src(sourced.css)
+        .pipe($.filesize())
+});
 
-  return gulp.src(app.html)
+gulp.task('comb', function() {
+    return gulp.src(app.scss)   
+        .pipe($.comb())
+        .pipe(gulp.dest(app.styles));
+});
+
+gulp.task('atomic', function() {
+    return gulp.src(sourced.index)
+        .pipe($.concat('_atomic.scss'))
+        .pipe($.atomic())
+        .pipe(gulp.dest(sourced.styles));
+});
+
+gulp.task('sass', function () {
+    return gulp.src(app.scss)
+        .pipe($.plumber({errorHandler: paint}))
+        .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+        .pipe($.sass({
+            precision: 10
+        }))
+        .pipe(gulp.dest(app.styles));
+});
+
+gulp.task('core', ['sass', 'filesize', 'browserify'], function () {
+  var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']}); // try implementing this in the other useref
+
+  return gulp.src(app.index)
     .pipe(assets)
-    .pipe($.rev())                // Rename the concatenated files
+    .pipe($.rev()) 
+    .pipe($.if('*.css', $.moreCSS({radical: true})))
+    .pipe($.if('*.css', $.uncss({
+            html: ['./app/index.html']
+        })))
+    .pipe($.if('*.css', $.combineMq()))
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.revReplace())         // Substitute in new filenames
-    .pipe(gulp.dest(dist.root));
+    .pipe($.revReplace())  
+    .pipe(gulp.dest('dist'));
 });
+
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
 
-    gulp.src(app.scss)
+    return  gulp.src(app.scss)
         .pipe(wiredep({
             directory: app.bower
         }))
         .pipe(gulp.dest(app.styles));
 
-    gulp.src(app.html)
+    return  gulp.src(app.html)
         .pipe(wiredep({
             directory: app.bower
         }))
@@ -271,8 +241,8 @@ gulp.task('finale', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     var runSequence = require('run-sequence');
-    runSequence( [ 'replace', 'LAB', 'lint', 'images', 'fonts', 'misc', 'rev', 'webcomponents'],
-      'inline', 'cleanscripts', 'uglify', 'build-styles', 'finale',
+    runSequence( [ 'replace', 'lint', 'images', 'fonts', 'misc', 'core', 'webcomponents'],
+      'filesize', 'cleanscripts', 'uglify', 'build-styles', 'finale',
       callback);
 });
 
