@@ -7,12 +7,12 @@
 // Begin Imports
 
 // Essential styles
-@import "_core/_variables";
-@import "_core/_fonts";
-@import "_core/_utility";
-@import "_core/_misc";
-@import "_core/_water";
-@import "_core/_general";
+@import "_core/variables";
+@import "_core/fonts";
+@import "_core/utility";
+@import "_core/misc";
+@import "_core/water";
+@import "_core/general";
 
 // Components
 
@@ -20,4 +20,4 @@
 
 
 // Overrides
-@import "_core/_overrides";
+@import "_core/overrides";
