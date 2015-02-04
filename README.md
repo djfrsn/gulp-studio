@@ -4,7 +4,7 @@
 
 ## Features
 
-Gives you live reload for html/js and style injection for css. This is provided through a connect server and browser sync. Libsass handles your .scss files. Bower integration is available through [wiredep](https://github.com/taptapship/wiredep), take a look at the README there to understand the Bower capabilities of Studi˚. Essentially anytime you install a js or css file with bower those dependencies are automagically added to your html file. Browserify is available to require modules in your javascript files with require('script').
+Gives you live reload for html/js and style injection for sass. This is provided through a connect server and browser sync. Libsass handles your .scss files. Bower integration is available through [wiredep](https://github.com/taptapship/wiredep), take a look at the README there to understand the Bower capabilities of Studi˚. Essentially anytime you install a js or css file with bower those dependencies are automagically added to your html file. Browserify is available to require modules in your javascript files with require('script').
 
 [LABjs](http://labjs.com/) added for async js script loading. 
 
