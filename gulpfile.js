@@ -241,7 +241,7 @@ gulp.task('finale', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     var runSequence = require('run-sequence');
-    runSequence( [ 'replace', 'lint', 'images', 'fonts', 'misc', 'core', 'webcomponents'],
+    runSequence( [ 'replace', 'lint', 'images', 'fonts', 'misc', 'core' ],
       'filesize', 'cleanscripts', 'uglify', 'build-styles', 'finale',
       callback);
 });
