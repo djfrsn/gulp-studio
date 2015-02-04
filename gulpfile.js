@@ -6,6 +6,7 @@ var gulp = require('gulp'),
         dir: './',
         root: './app/',
         bower: './app/bower_components/',
+        fonts: './app/styles/fonts/*',
         imgs: './app/imgs/**/*',
         index: './app/index.html',
         html: './app/*.html',
@@ -27,24 +28,10 @@ var gulp = require('gulp'),
         paint: './dist/styles/paint.css',
         rootjs: './dist/scripts/*.js',
         js: './dist/scripts/',
+        fonts: './dist/styles/fonts/',
         imgs: './dist/imgs/',
         root: './dist/'
-    },
-    paint = function (err) {  
-        $.util.log('paint(err):', $.util.colors.red(err.message));
-        $.util.beep();
-    },
-    AUTOPREFIXER_BROWSERS = [
-        'ie >= 10',
-        'ie_mob >= 10',
-        'ff >= 30',
-        'chrome >= 34',
-        'safari >= 7',
-        'opera >= 23',
-        'ios >= 7',
-        'android >= 4.4',
-        'bb >= 10'
-    ];
+    };
 
 gulp.task('cleanscripts', function (cb) {
     var rimraf = require('rimraf'); 
@@ -56,26 +43,6 @@ gulp.task('clean', function (cb) {
         rimraf(dist.root, cb);
 });
 
-gulp.task('images', function () {
-    return gulp.src(app.imgs)
-        .pipe($.cache($.imagemin({
-            progressive: true,
-            interlaced: true
-        })))
-        .pipe(gulp.dest(dist.imgs));
-});
-
-gulp.task('misc', function () {
-    return gulp.src(app.aux)
-        .pipe(gulp.dest(dist.root));
-});
-
-gulp.task("replace", function() {
-    return gulp.src(['app/scripts/fonts.js'])
-        .pipe($.replace('../', ''))
-        .pipe(gulp.dest(dist.js));
-});
-
 gulp.task('lint', function () {
     var stylish = require('jshint-stylish');
 
@@ -84,10 +51,94 @@ gulp.task('lint', function () {
         .pipe($.jshint.reporter(stylish));
 });
 
+gulp.task('comb', function() {
+
+    return gulp.src(app.scss)   
+        .pipe($.comb())
+        .pipe(gulp.dest(app.styles));
+});
+
+gulp.task('images', function () {
+
+    return gulp.src(app.imgs)
+        .pipe($.cache($.imagemin({
+            progressive: true,
+            interlaced: true
+        })))
+        .pipe(gulp.dest(dist.imgs));
+});
+
+gulp.task('fonts', function () {
+    return gulp.src(app.fonts)
+        .pipe(gulp.dest(dist.fonts));
+});
+
+gulp.task('misc', function () {
+    return gulp.src(app.aux)
+        .pipe(gulp.dest(dist.root));
+});
+
+gulp.task('LAB', function () {
+    return gulp.src(app.LAB)
+        .pipe(gulp.dest(dist.js));
+});
+
+gulp.task("replace", function() {
+
+    return gulp.src(['app/scripts/fonts.js'])
+        .pipe($.replace('../', ''))
+        .pipe(gulp.dest(dist.js));
+});
+
+gulp.task("inline", function() {
+
+    return gulp.src(dist.index)
+        .pipe($.inlineSource())
+        .pipe(gulp.dest(dist.root));
+});
+gulp.
+task('copystyles', function () {
+    return gulp.src([dist.paint])
+        .pipe($.rename({
+            basename: "site" // site.css
+        }))
+        .pipe(gulp.dest('dist/styles'));
+});
+
 gulp.task('uglify', function () {
-    return gulp.src(dist.rootjs)
-        .pipe($.uglify())
-        .pipe(gulp.dest(dist.js))
+
+    gulp.src(dist.rootjs)
+    .pipe($.uglify())
+    .pipe(gulp.dest(dist.js))
+});
+
+gulp.task('build-styles', function () {
+    var moreCSS = require('gulp-more-css');
+
+    gulp.src(dist.css)
+    .pipe($.autoprefixer('> 1%'))
+    .pipe($.filesize())
+    .pipe($.uncss({
+        html: ['./app/index.html']
+    }))
+    .pipe($.combineMediaQueries({ log: true }))
+    .pipe(moreCSS({radical: true}))
+    .pipe($.filesize())
+    .pipe(gulp.dest(dist.styles))
+});
+
+gulp.task('styles', function () {
+    var paint = function (err) {  
+        $.util.log('paint(err):', $.util.colors.red(err.message));
+        $.util.beep();
+    };
+
+    return gulp.src(app.scss)
+        .pipe($.plumber({errorHandler: paint}))
+        .pipe($.sass({
+            precision: 10
+        }))
+        .pipe(gulp.dest(app.styles));
 });
 
 gulp.task('browserify', function () {
@@ -111,67 +162,37 @@ gulp.task('browserify', function () {
     .pipe(gulp.dest(app.js));
 });
 
-gulp.task("inline", function() {
-    return gulp.src(dist.index)
-        .pipe($.inlineSource())
+gulp.task('core', ['browserify'], function () {
+    var assets = $.useref.assets();
+
+    return gulp.src(app.html)
+        .pipe(assets)
+        .pipe(assets.restore())
+        .pipe($.useref())
         .pipe(gulp.dest(dist.root));
 });
 
-gulp.task('filesize', function () {
-    return gulp.src(sourced.css)
-        .pipe($.filesize())
-});
+gulp.task("rev", ['core'], function() {
+  var assets = $.useref.assets();
 
-gulp.task('comb', function() {
-    return gulp.src(app.scss)   
-        .pipe($.comb())
-        .pipe(gulp.dest(app.styles));
-});
-
-gulp.task('atomic', function() {
-    return gulp.src(sourced.index)
-        .pipe($.concat('_atomic.scss'))
-        .pipe($.atomic())
-        .pipe(gulp.dest(sourced.styles));
-});
-
-gulp.task('sass', function () {
-    return gulp.src(app.scss)
-        .pipe($.plumber({errorHandler: paint}))
-        .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-        .pipe($.sass({
-            precision: 10
-        }))
-        .pipe(gulp.dest(app.styles));
-});
-
-gulp.task('core', ['sass', 'filesize', 'browserify'], function () {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']}); // try implementing this in the other useref
-
-  return gulp.src(app.index)
+  return gulp.src(app.html)
     .pipe(assets)
-    .pipe($.rev()) 
-    .pipe($.if('*.css', $.moreCSS({radical: true})))
-    .pipe($.if('*.css', $.uncss({
-            html: ['./app/index.html']
-        })))
-    .pipe($.if('*.css', $.combineMq()))
+    .pipe($.rev())                // Rename the concatenated files
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.revReplace())  
-    .pipe(gulp.dest('dist'));
+    .pipe($.revReplace())         // Substitute in new filenames
+    .pipe(gulp.dest(dist.root));
 });
-
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
 
-    return  gulp.src(app.scss)
+    gulp.src(app.scss)
         .pipe(wiredep({
             directory: app.bower
         }))
         .pipe(gulp.dest(app.styles));
 
-    return  gulp.src(app.html)
+    gulp.src(app.html)
         .pipe(wiredep({
             directory: app.bower
         }))
@@ -241,8 +262,8 @@ gulp.task('finale', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     var runSequence = require('run-sequence');
-    runSequence( [ 'replace', 'lint', 'images', 'misc', 'core' ],
-      'filesize', 'cleanscripts', 'uglify', 'build-styles', 'finale',
+    runSequence( [ 'replace', 'LAB', 'lint', 'images', 'fonts', 'misc', 'rev'],
+      'inline', 'cleanscripts', 'uglify', 'build-styles', 'finale',
       callback);
 });
 
