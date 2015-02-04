@@ -62,7 +62,7 @@ npm install
 Run
 
 ```sh
-gulp paint
+gulp serve
 ```
 This kickstarts a connect server w/ browsersync that opens up a blank project in your browser. Vivy!
 
